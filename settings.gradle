@@ -1,10 +1,9 @@
 
-include ":changedb-core", ":issuetracking", ":jpadoc", ":restdoc", ":classifications" , ":spark-udfs" //, ":springSparkConsole"
+include ":changedb-core", ":issuetracking", ":jpadoc", ":classifications" , ":spark-udfs" //, ":springSparkConsole"
 
 project(':changedb-core').projectDir = "$rootDir/../changedb" as File
 project(':issuetracking').projectDir = "$rootDir/../issuetracking" as File
 project(':jpadoc').projectDir = "$rootDir/../jpadoc" as File
-project(':restdoc').projectDir = "$rootDir/../restdoc" as File
 
 project(':classifications').projectDir = "$rootDir/../javaserver" as File
 

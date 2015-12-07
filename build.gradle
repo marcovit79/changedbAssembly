@@ -50,7 +50,6 @@ subprojects {
 
 bootRepackage {
 	mainClassName = 'org.sorcerers.changedb.Application'
-	//mainClassName= 'org.sorcerers.changedb.SparkSqlConsoleApplication'
 }
 
 bootRun {
