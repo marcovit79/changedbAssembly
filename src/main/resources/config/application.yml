@@ -1,0 +1,31 @@
+#
+# [ Database Configuration Section ]
+#
+# local postgress
+#spring.datasource.url : "jdbc:postgresql://localhost:5432/mvit"
+#spring.datasource.username : mvit
+#spring.datasource.password : 
+
+
+
+datasource.classifications.url : "jdbc:h2:file:/${user.home}/_simple_server/db"
+datasource.classifications.username : "sa"
+datasource.classifications.password : "" 
+
+datasource.changedb.babylon.url : "jdbc:postgresql://localhost:5432/mvit"
+datasource.changedb.babylon.username : mvit
+datasource.changedb.babylon.password : 
+
+spring.jpa.hibernate.ddl-auto : update
+spring.jpa.properties.hibernate.jdbc.batch_size : 10
+spring.jpa.properties.hibernate.order_inserts : true
+ 
+spring.jpa.show-sql : true
+
+
+
+cachelocation: "${user.home}/_changedb/cache"
+
+gitcache.fsroot: "${user.home}/_changedb/gits"
+
+longOperationlog.fsroot: "${user.home}/_changedb/logs"

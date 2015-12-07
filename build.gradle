@@ -1,0 +1,106 @@
+buildscript {
+	ext {
+		springBootVersion = '1.2.5.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+
+version = '0.1'
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	runtime
+	javadocExt
+}
+
+subprojects {
+	println "Config of ${project.name}"
+	if(project.name == "spark-udfs") {
+		
+		configurations {
+			compile
+			runtime 
+			
+			compile.exclude group: "org.slf4j", module: "slf4j-log4j12"
+			compile.exclude group: "org.eclipse.jetty.orbit", module: "javax.servlet"
+			compile.exclude group: "org.mortbay.jetty", module: "servlet-api"
+			compile.exclude group: "com.sun.jersey.jersey-test-framework", module: "jersey-test-framework-grizzly2"
+			
+			runtime.exclude group: "org.slf4j", module: "slf4j-log4j12"
+			runtime.exclude group: "org.eclipse.jetty.orbit", module: "javax.servlet"
+			runtime.exclude group: "org.mortbay.jetty", module: "servlet-api"
+			runtime.exclude group: "com.sun.jersey.jersey-test-framework", module: "jersey-test-framework-grizzly2"
+		}
+	}
+}
+
+
+bootRepackage {
+	mainClassName = 'org.sorcerers.changedb.Application'
+	//mainClassName= 'org.sorcerers.changedb.SparkSqlConsoleApplication'
+}
+
+bootRun {
+	jvmArgs = [
+		"-XX:+UseParallelOldGC", 
+		"-XX:MaxGCPauseMillis=5000",
+		"-XX:+UseGCOverheadLimit", 
+		"-XX:GCTimeRatio=9", 
+		"-Xms8g", 
+		"-Xmx8g"
+		]
+}
+
+
+
+task docs(type: Javadoc) {
+	
+	source subprojects.collect { prj ->
+		println "${prj.name}  ${prj.projectDir}"
+		println "${prj.name}  ${prj.sourceSets.main.allJava.srcDirs}"
+		
+		"${prj.projectDir}/src/main/java"
+	}
+	classpath = rootProject.configurations.compile + configurations.javadocExt;
+	
+	destinationDir = new File(rootProject.projectDir, 'build/docs')
+}
+
+task javadocJar(type: Jar, dependsOn: docs) {
+	classifier = 'javadoc'
+	from docs.destinationDir
+	into "META-INF/resources/javadoc"
+}
+
+
+dependencies {
+	javadocExt('javax.interceptor:javax.interceptor-api:1.+')
+	
+	subprojects.each({  p -> 
+		compile project(":${p.name}")
+	})
+	
+	
+	runtime files(rootProject.tasks['javadocJar'].archivePath) {
+		builtBy ':javadocJar'
+	}
+	
+}
+
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.6'
+}
