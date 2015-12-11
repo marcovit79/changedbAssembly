@@ -10,6 +10,7 @@ buildscript {
 	}
 }
 
+
 apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'spring-boot'
@@ -32,7 +33,7 @@ subprojects {
 		
 		configurations {
 			compile
-			runtime 
+			runtime
 			
 			compile.exclude group: "org.slf4j", module: "slf4j-log4j12"
 			compile.exclude group: "org.eclipse.jetty.orbit", module: "javax.servlet"
@@ -103,5 +104,6 @@ dependencies {
 
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.6'
+	gradleVersion = '2.9'
 }
+
