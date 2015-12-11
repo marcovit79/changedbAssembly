@@ -1,10 +1,9 @@
 
-include ":changedb-core", ":springEmbeddedDoc", ":editClassification" , ":spark-udfs"
+include ":changedb", ":springEmbeddedDoc", ":editClassification", ":sparkUdfs"
 
-project(':changedb-core').projectDir = "$rootDir/../changedb" as File
+project(':changedb').projectDir = "$rootDir/../changedb" as File
 project(':springEmbeddedDoc').projectDir = "$rootDir/../springEmbeddedDoc" as File
-project(':editClassification').projectDir = "$rootDir/../editClassification" as File
+project(':editClassification').projectDir = "$rootDir/../editclassification" as File
 
-project(':spark-udfs').projectDir = "$rootDir/../sparkUdfs" as File
-//project(':springSparkConsole').projectDir = "$rootDir/../springSparkConsole" as File
+project(':sparkUdfs').projectDir = "$rootDir/../sparkudfs" as File
 
